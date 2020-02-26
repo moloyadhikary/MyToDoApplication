@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../screens/task_types_screen.dart';
 import '../screens/completed_task_screen.dart';
 import '../screens/settings_screen.dart';
+import '../screens/about_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -57,7 +58,6 @@ class AppDrawer extends StatelessWidget {
                   .pushReplacementNamed(CompletedTasksScreen.pageRouteName);
             },
           ),
-          
           Divider(),
           ListTile(
             leading: const Icon(Icons.settings),
@@ -68,6 +68,18 @@ class AppDrawer extends StatelessWidget {
             onTap: () {
               Navigator.of(context)
                   .pushReplacementNamed(SettingsScreen.pageRouteName);
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: const Icon(Icons.info),
+            title: Text(
+              'About App',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            onTap: () {
+              Navigator.of(context)
+                  .pushReplacementNamed(AboutScreen.pageRouteName);
             },
           ),
         ],

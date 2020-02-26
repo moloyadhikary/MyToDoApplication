@@ -7,6 +7,7 @@ import './screens/add_new_task_type_screen.dart';
 import './screens/add_new_task_screen.dart';
 import './screens/completed_task_screen.dart';
 import './screens/settings_screen.dart';
+import './screens/about_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         AddNewTaskScreen.pageRouteName: (ctx) => AddNewTaskScreen(),
         CompletedTasksScreen.pageRouteName: (ctx) => CompletedTasksScreen(),
         SettingsScreen.pageRouteName: (ctx) => SettingsScreen(),
+        AboutScreen.pageRouteName: (ctx) => AboutScreen(),
       },
     );
   }
