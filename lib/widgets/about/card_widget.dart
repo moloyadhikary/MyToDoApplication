@@ -11,10 +11,10 @@ class CardWidgets extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: Colors.white,
-      margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+      margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 0),
       child: ListTile(
         leading: icon,
-        title: Text(
+        trailing: Text(
           title,
           maxLines: 1,
           style: TextStyle(color: Colors.teal, fontWeight: FontWeight.bold),

@@ -45,6 +45,7 @@ flutter:
   assets:
    - assets/images/PP_IMAGE_SM.png
    - assets/images/PP_IMAGE_SM.jpeg
+   - assets/images/PP_IMAGE_SM2.jpg
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
