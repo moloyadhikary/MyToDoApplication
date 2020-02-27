@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 
 import './screens/home_screen.dart';
 import './screens/task_types_screen.dart';
@@ -9,29 +9,38 @@ import './screens/completed_task_screen.dart';
 import './screens/settings_screen.dart';
 import './screens/about_screen.dart';
 
+import './providers/task_types_provider.dart';
+import './providers/task_provider.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'My To Do',
-      theme: ThemeData(        
-        primarySwatch: Colors.purple,
-        accentColor: Colors.deepOrange,
-        fontFamily: 'Ubuntu',
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: TaskTypeProvider()),
+        ChangeNotifierProvider.value(value: TaskProvider()),
+      ],
+      child: MaterialApp(
+        title: 'My To Do',
+        theme: ThemeData(
+          primarySwatch: Colors.purple,
+          accentColor: Colors.deepOrange,
+          fontFamily: 'Ubuntu',
+        ),
+        home: HomeScreen(),
+        routes: {
+          HomeScreen.pageRouteName: (ctx) => HomeScreen(),
+          TasktypesScreen.pageRouteName: (ctx) => TasktypesScreen(),
+          AddNewTaskTypeScreen.pageRouteName: (ctx) => AddNewTaskTypeScreen(),
+          AddNewTaskScreen.pageRouteName: (ctx) => AddNewTaskScreen(),
+          CompletedTasksScreen.pageRouteName: (ctx) => CompletedTasksScreen(),
+          SettingsScreen.pageRouteName: (ctx) => SettingsScreen(),
+          AboutScreen.pageRouteName: (ctx) => AboutScreen(),
+        },
       ),
-      home: HomeScreen(),
-      routes: {
-        HomeScreen.pageRouteName: (ctx) => HomeScreen(),
-        TasktypesScreen.pageRouteName: (ctx) => TasktypesScreen(),
-        AddNewTaskTypeScreen.pageRouteName: (ctx) => AddNewTaskTypeScreen(),
-        AddNewTaskScreen.pageRouteName: (ctx) => AddNewTaskScreen(),
-        CompletedTasksScreen.pageRouteName: (ctx) => CompletedTasksScreen(),
-        SettingsScreen.pageRouteName: (ctx) => SettingsScreen(),
-        AboutScreen.pageRouteName: (ctx) => AboutScreen(),
-      },
     );
   }
 }

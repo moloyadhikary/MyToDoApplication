@@ -1,7 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class AddNewTaskScreen extends StatelessWidget {
+import '../providers/task_provider.dart';
+
+class AddNewTaskScreen extends StatefulWidget {
   static const pageRouteName= '/add-new-task';
+
+  @override
+  _AddNewTaskScreenState createState() => _AddNewTaskScreenState();
+}
+
+class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
+
+  void _saveTask(){
+    Provider.of<TaskProvider>(context, listen: false).addTask('Test Task', 'Test Description', 1);
+    Navigator.of(context).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
    return Scaffold(
@@ -12,7 +27,7 @@ class AddNewTaskScreen extends StatelessWidget {
         ),
       ),
       body: Center(
-        child: Text('This is where we add new task'),
+        child: FlatButton(child: Text('Add'), onPressed: _saveTask,),
       ),
     );
   }
