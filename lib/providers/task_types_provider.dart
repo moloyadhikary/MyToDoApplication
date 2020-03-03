@@ -19,6 +19,16 @@ class TaskTypeProvider with ChangeNotifier {
     });
   }
 
+  Future<Tasktypes> getTaskTypeById(int id) async {
+     var sql = 'SELECT * FROM task_types WHERE ID = $id';
+    var result = await DBHelper.rawQuery(sql); 
+    var allTaskTypes = result.isNotEmpty ? result.toList().map((t) => Tasktypes.fromMap(t)).toList() : null;
+    if(allTaskTypes==null){
+      return null;
+    }
+    return allTaskTypes.first;
+  }
+
 
 
   Future<List<Tasktypes>> fetchAndSetTasktypes() async {
@@ -35,5 +45,10 @@ class TaskTypeProvider with ChangeNotifier {
     notifyListeners();
     return _tasktypes;
   }
+
+  void updateTaskType(Tasktypes type){
+      String sql = 'UPDATE task_types SET title="${type.title}", description="${type.description}" WHERE id=${type.id}';
+      DBHelper.updateQuery(sql);
+    }
 
 }

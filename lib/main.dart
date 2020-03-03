@@ -12,6 +12,7 @@ import './screens/add_sub_task_screen.dart';
 import './screens/task_details_screen.dart';
 import './screens/edit_sub_task_screen.dart';
 import './screens/edit_task_screen.dart';
+import './screens/edit_task_type_screen.dart';
 
 import './providers/task_types_provider.dart';
 import './providers/task_provider.dart';
@@ -51,6 +52,7 @@ class MyApp extends StatelessWidget {
           TaskDetailsScreen.pageRouteName: (ctx) => TaskDetailsScreen(),
           EditSubTaskScreen.pageRouteName: (ctx) => EditSubTaskScreen(),
           EditTaskScreen.pageRouteName: (ctx) => EditTaskScreen(),
+          EditTaskTypeScreen.pageRouteName: (ctx) => EditTaskTypeScreen(),
         },
       ),
     );

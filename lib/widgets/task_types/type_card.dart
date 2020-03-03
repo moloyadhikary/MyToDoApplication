@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../models/task_types.dart';
+import '../../screens/edit_task_type_screen.dart';
 
 class TypeCard extends StatelessWidget {
   final Tasktypes type;
@@ -24,7 +25,9 @@ class TypeCard extends StatelessWidget {
         trailing: IconButton(
             icon: Icon(Icons.edit),
             color: Theme.of(context).primaryColor,
-            onPressed: () => {}),
+            onPressed: () {
+              Navigator.of(context).pushNamed(EditTaskTypeScreen.pageRouteName, arguments: type.id);
+            }),
       ),
     );
   }
