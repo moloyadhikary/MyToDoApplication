@@ -12,7 +12,7 @@ class AppDrawer extends StatelessWidget {
       child: Column(
         children: <Widget>[
           AppBar(
-            title: Text('Personalize My To Do'),
+            title:const Text('Personalize My To Do'),
             leading: Builder(
               builder: (BuildContext context) {
                 return IconButton(
@@ -60,7 +60,7 @@ class AppDrawer extends StatelessWidget {
           ),
           Divider(),
           ListTile(
-            leading: const Icon(Icons.settings),
+            leading: const Icon(Icons.tune),
             title: Text(
               'Settings',
               style: TextStyle(fontWeight: FontWeight.bold),

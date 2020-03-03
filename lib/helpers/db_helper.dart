@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:sqflite/sqflite.dart' as sql;
 import 'package:path/path.dart' as path;
 import 'package:sqflite/sqlite_api.dart';
@@ -14,6 +12,8 @@ class DBHelper {
           'CREATE TABLE task_types(id integer PRIMARY KEY not null, title TEXT, description TEXT)');
       db.execute(
           'CREATE TABLE tasks(id integer PRIMARY KEY not null, typeId integer, title TEXT, description TEXT, createDate TEXT, updateDate TEXT, isCompleted integer)');
+      db.execute(
+          'CREATE TABLE sub_tasks(id integer PRIMARY KEY not null, taskId integer, title TEXT, description TEXT, createDate TEXT, updateDate TEXT, isCompleted integer)');
     }, version: 1);
   }
 
@@ -34,5 +34,10 @@ class DBHelper {
   static Future<List<Map<String, dynamic>>> rawQuery(String sql) async {
     final db = await DBHelper.database();
     return await db.rawQuery(sql);
+  }
+
+  static Future<void> updateQuery(String sql) async {
+    final db = await DBHelper.database();
+    return await db.rawUpdate(sql);
   }
 }

@@ -17,7 +17,7 @@ class CardWidgets extends StatelessWidget {
         trailing: Text(
           title,
           maxLines: 1,
-          style: TextStyle(color: Colors.teal, fontWeight: FontWeight.bold),
+          style:const TextStyle(color: Colors.teal, fontWeight: FontWeight.bold),
         ),
         onTap: onPressed,
       ),

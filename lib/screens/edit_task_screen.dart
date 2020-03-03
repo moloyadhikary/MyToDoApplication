@@ -2,22 +2,57 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flushbar/flushbar.dart';
 
+import '../models/tasks.dart';
 import '../providers/task_provider.dart';
-import '../providers/task_types_provider.dart';
 import '../helpers/widget_helper.dart';
+import '../providers/task_types_provider.dart';
 
-class AddNewTaskScreen extends StatefulWidget {
-  static const pageRouteName = '/add-new-task';
-
+class EditTaskScreen extends StatefulWidget {
+  static const pageRouteName = '/add-task';
   @override
-  _AddNewTaskScreenState createState() => _AddNewTaskScreenState();
+  _EditTaskScreenState createState() => _EditTaskScreenState();
 }
 
-class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
+class _EditTaskScreenState extends State<EditTaskScreen> {
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
   List<DropdownMenuItem<String>> typeList;
   String ddlSelected = "0";
+  Task task;
+  int taskId = 0;
+
+  @override
+  initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      typeList = [];
+
+      typeList.add(WidgetHelper.getTaskTypeDDL("0", "Select Task Type"));
+
+      Provider.of<TaskTypeProvider>(context, listen: false)
+          .fetchAndSetTasktypes()
+          .then((list) {
+        list.forEach((t) {
+          typeList.add(
+              WidgetHelper.getTaskTypeDDL(t.id.toString(), t.title.toString()));
+        });
+      });
+
+      taskId = ModalRoute.of(context).settings.arguments as int;
+      setState(() {
+        Provider.of<TaskProvider>(context, listen: false)
+            .getTaskById(taskId)
+            .then((val) {
+          setState(() {
+            task = val;
+            _titleController.text = task.title;
+            _descriptionController.text = task.description;
+            ddlSelected = task.typeId.toString();
+          });
+        });
+      });
+    });
+  }
 
   void _saveTask() {
     String title = _titleController.text.trim();
@@ -35,26 +70,18 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
       ).show(context);
       return;
     }
-    Provider.of<TaskProvider>(context, listen: false)
-        .addTask(title, description, int.parse(ddlSelected));
+    task.title = title;
+    task.description = description;
+    task.typeId = int.parse(ddlSelected);
+    Provider.of<TaskProvider>(context, listen: false).updateTask(task);
     Navigator.of(context).pop();
   }
 
   @override
-  void initState() {
-    super.initState();
-    typeList = [];
-
-    typeList.add(WidgetHelper.getTaskTypeDDL("0", "Select Task Type"));
-
-    Provider.of<TaskTypeProvider>(context, listen: false)
-        .fetchAndSetTasktypes()
-        .then((list) {
-      list.forEach((t) {
-        typeList.add(
-            WidgetHelper.getTaskTypeDDL(t.id.toString(), t.title.toString()));
-      });
-    });
+  void dispose() {
+    _titleController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
   }
 
   @override
@@ -78,7 +105,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                   child: Column(
                     children: <Widget>[
                       DropdownButton(
-                        hint:const Text('Chosse Task Type'),
+                        hint: Text('Chosse Task Type'),
                         value: ddlSelected,
                         items: typeList,
                         onChanged: (value) {
@@ -104,12 +131,12 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
               ),
             ),
             RaisedButton.icon(
-              icon: const Icon(Icons.add),
+              icon: const Icon(Icons.save),
               textColor: Colors.white,
-              label: Text(
-                'Add Task',
+              label: const Text(
+                'Save Task',
                 style:
-                    const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
               onPressed: _saveTask,
               elevation: 0,

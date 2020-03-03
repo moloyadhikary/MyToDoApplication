@@ -13,7 +13,7 @@ class TypeCard extends StatelessWidget {
       child: ListTile(
         title: Text(
           type.title,
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style:const TextStyle(fontWeight: FontWeight.bold),
         ),
         leading: CircleAvatar(
             child: Text(

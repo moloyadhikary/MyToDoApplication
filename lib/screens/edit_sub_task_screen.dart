@@ -2,27 +2,47 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flushbar/flushbar.dart';
 
-import '../providers/task_types_provider.dart';
+import '../models/sub_task.dart';
+import '../providers/sub_task_provider.dart';
 
-class AddNewTaskTypeScreen extends StatefulWidget {
-  static const pageRouteName = '/add-new-task-type';
-
+class EditSubTaskScreen extends StatefulWidget {
+  static const pageRouteName = '/edit-sub_task';
   @override
-  _AddNewTaskTypeScreenState createState() => _AddNewTaskTypeScreenState();
+  _EditSubTaskScreenState createState() => _EditSubTaskScreenState();
 }
 
-class _AddNewTaskTypeScreenState extends State<AddNewTaskTypeScreen> {
+class _EditSubTaskScreenState extends State<EditSubTaskScreen> {
+  SubTask st;
+  int subTaskId = 0;
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
 
-  void _saveTaskType() {
-    String title = _titleController.text.trim();
-    String description = _descriptionController.text.trim();
+  @override
+  initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      subTaskId = ModalRoute.of(context).settings.arguments as int;
+      setState(() {
+        Provider.of<SubTaskProvider>(context, listen: false)
+            .getSubTaskById(subTaskId)
+            .then((val) {
+          setState(() {
+            st = val;
+            _titleController.text = st.title;
+            _descriptionController.text = st.description;
+          });
+        });
+      });
+    });
+  }
 
-    if (title.isEmpty || description.isEmpty) {
+  _updateSubTask() {
+    String subTaskTitle = _titleController.text.trim();
+    String subTaskDescription = _descriptionController.text.trim();
+    if (subTaskTitle.isEmpty || subTaskDescription.isEmpty) {
       Flushbar(
         title: 'Invalid input!',
-        message: 'Please provide both title and description',
+        message: 'Please provide sub task title',
         icon: const Icon(
           Icons.error_outline,
           color: Colors.red,
@@ -32,18 +52,26 @@ class _AddNewTaskTypeScreenState extends State<AddNewTaskTypeScreen> {
       ).show(context);
       return;
     }
-    Provider.of<TaskTypeProvider>(context, listen: false)
-        .addTaskType(title, description);
-    Navigator.of(context).pop();
+    st.title = subTaskTitle;
+    st.description = subTaskDescription;
+    Provider.of<SubTaskProvider>(context, listen: false).updateSubTask(st);
+    Navigator.of(context).pop(true);
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:const Text(
-          'Add New Task Type',
-          style:const TextStyle(fontWeight: FontWeight.bold),
+        title: Text(
+          'Edit Sub Task',
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
       body: SafeArea(
@@ -61,11 +89,11 @@ class _AddNewTaskTypeScreenState extends State<AddNewTaskTypeScreen> {
                         decoration:const InputDecoration(labelText: 'Title'),
                         controller: _titleController,
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(),
                       TextField(
                         decoration:const InputDecoration(labelText: 'Description'),
                         controller: _descriptionController,
-                        maxLines: 3,
+                        maxLines: 2,
                       ),
                     ],
                   ),
@@ -73,14 +101,14 @@ class _AddNewTaskTypeScreenState extends State<AddNewTaskTypeScreen> {
               ),
             ),
             RaisedButton.icon(
-              icon: const Icon(Icons.add),
+              icon: const Icon(Icons.save),
               textColor: Colors.white,
               label:const Text(
-                'Add Task Type',
+                'Save Sub Task',
                 style:
                     TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
-              onPressed: _saveTaskType,
+              onPressed: _updateSubTask,
               elevation: 0,
               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               color: Theme.of(context).primaryColorDark,

@@ -19,26 +19,29 @@ class TasktypesScreen extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
-      body: FutureBuilder<List<Tasktypes>>(
-        future: taskTypes.fetchAndSetTasktypes(),
-        builder: (ctx, data) {
-          if (data.hasData) {
-            return ListView.builder(
-              itemCount: data.data.length,
-              itemBuilder: (ctx, i) {
-                Tasktypes taskType = data.data[i];
-                return TypeCard(taskType);
-              },
-            );
-          } else {
-            return Center(child: CircularProgressIndicator());
-          }
-        },
+      backgroundColor: Theme.of(context).primaryColorDark,
+      body: SafeArea(
+        child: FutureBuilder<List<Tasktypes>>(
+          future: taskTypes.fetchAndSetTasktypes(),
+          builder: (ctx, data) {
+            if (data.hasData) {
+              return ListView.builder(
+                itemCount: data.data.length,
+                itemBuilder: (ctx, i) {
+                  Tasktypes taskType = data.data[i];
+                  return TypeCard(taskType);
+                },
+              );
+            } else {
+              return Center(child: CircularProgressIndicator());
+            }
+          },
+        ),
       ),
       drawer: AppDrawer(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child:const Icon(Icons.add),
         onPressed: () {
           Navigator.of(context).pushNamed(AddNewTaskTypeScreen.pageRouteName);
         },

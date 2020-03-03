@@ -13,8 +13,10 @@ class SettingsScreen extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
-      body: Center(
-        child: Text('This is where we customize the application settings'),
+      body: SafeArea(
+        child: Center(
+          child:const Text('This is where we customize the application settings'),
+        ),
       ),
       drawer: AppDrawer(),
     );

@@ -67,7 +67,7 @@ class AboutScreen extends StatelessWidget {
                 ),
                 Text(
                   'Moloy Adhikary',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 30,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -91,13 +91,13 @@ class AboutScreen extends StatelessWidget {
                     color: Colors.teal.shade700,
                   ),
                 ),
-                CardWidgets('+880 1717 219 723', Icon(Icons.call), _onCallPressed),
+                CardWidgets('+880 1717 219 723',const Icon(Icons.call), _onCallPressed),
                 CardWidgets(
-                    'moloy.cse20@gmail.com', Icon(Icons.email), _onEmailPressed),
+                    'moloy.cse20@gmail.com',const  Icon(Icons.email), _onEmailPressed),
                 CardWidgets(
-                    'github.com/moloyadhikary', Icon(Icons.web), _onWebPressed),
+                    'github.com/moloyadhikary',const  Icon(Icons.web), _onWebPressed),
                 CardWidgets(
-                    'Dhaka, Bangladesh', Icon(Icons.location_city), null),
+                    'Dhaka, Bangladesh',const  Icon(Icons.location_city), null),
               ],
             ),
           ),

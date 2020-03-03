@@ -8,9 +8,15 @@ import './screens/add_new_task_screen.dart';
 import './screens/completed_task_screen.dart';
 import './screens/settings_screen.dart';
 import './screens/about_screen.dart';
+import './screens/add_sub_task_screen.dart';
+import './screens/task_details_screen.dart';
+import './screens/edit_sub_task_screen.dart';
+import './screens/edit_task_screen.dart';
 
 import './providers/task_types_provider.dart';
 import './providers/task_provider.dart';
+import './providers/sub_task_provider.dart';
+import './providers/view_models_provider.dart';
 
 void main() => runApp(MyApp());
 
@@ -22,6 +28,8 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider.value(value: TaskTypeProvider()),
         ChangeNotifierProvider.value(value: TaskProvider()),
+        ChangeNotifierProvider.value(value: SubTaskProvider()),
+        ChangeNotifierProvider.value(value: ViewModelsProvider()),
       ],
       child: MaterialApp(
         title: 'My To Do',
@@ -39,6 +47,10 @@ class MyApp extends StatelessWidget {
           CompletedTasksScreen.pageRouteName: (ctx) => CompletedTasksScreen(),
           SettingsScreen.pageRouteName: (ctx) => SettingsScreen(),
           AboutScreen.pageRouteName: (ctx) => AboutScreen(),
+          AddSubTaskScreen.pageRouteName: (ctx) => AddSubTaskScreen(),
+          TaskDetailsScreen.pageRouteName: (ctx) => TaskDetailsScreen(),
+          EditSubTaskScreen.pageRouteName: (ctx) => EditSubTaskScreen(),
+          EditTaskScreen.pageRouteName: (ctx) => EditTaskScreen(),
         },
       ),
     );
